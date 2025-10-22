@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+            margin-top: -8px;
+            margin-bottom: 8px;
+        }
+        .success {
+            color: green;
+            font-size: 1.1em;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    {% if success %}
+        <div class="success">
+            <p>✅ Thank you for logging in!</p>
+            <p>Your email: <strong>{{ email }}</strong></p>
+        </div>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            <h2>Login</h2>
+
+            <label>Email:</label>
+            <input type="text" name="email" value="{{ email }}">
+            {% if errors.email %}
+                <div class="error">{{ errors.email }}</div>
+            {% endif %}
+
+            <label>Password:</label>
+            <input type="password" name="password" value="{{ password }}">
+            {% if errors.password %}
+                <div class="error">{{ errors.password }}</div>
+            {% endif %}
+
+            <button type="submit">Submit</button>
+        </form>
+    {% endif %}
+</body>
+</html>
